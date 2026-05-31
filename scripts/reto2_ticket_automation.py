@@ -1,3 +1,5 @@
+import json
+from datetime import datetime
 from pathlib import Path
 import pandas as pd
 
@@ -6,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_FILE = BASE_DIR / "data" / "tickets.csv"
 CLEAN_OUTPUT_FILE = BASE_DIR / "data" / "tickets_clean.csv"
 FILTERED_OUTPUT_FILE = BASE_DIR / "data" / "critical_tickets.csv"
+JSON_OUTPUT_FILE = BASE_DIR / "data" / "critical_tickets.json"
 
 REQUIRED_COLUMNS = [
     "id",
@@ -39,7 +42,7 @@ def load_tickets(file_path: Path) -> pd.DataFrame:
             encoding="utf-8"
         )
 
-        # Normalización robusta de cabeceras
+        # Normalización de nombres de columnas
         dataframe.columns = (
             dataframe.columns
             .str.strip()
@@ -166,6 +169,47 @@ def export_to_csv(
     )
 
 
+def export_to_json(
+    dataframe: pd.DataFrame,
+    output_path: Path
+) -> None:
+    """
+    Export filtered tickets to JSON format.
+
+    Args:
+        dataframe (pd.DataFrame): Filtered dataframe.
+        output_path (Path): Output JSON file path.
+    """
+    # Remplazar NaN por None para que se serialice como null en JSON
+    dataframe = dataframe.astype(object).where(
+        pd.notnull(dataframe),
+        None
+    )
+
+    payload = {
+        "generated_at": (
+            datetime.now().isoformat()
+        ),
+        "total_critical_tickets": len(dataframe),
+        "tickets": dataframe.to_dict(
+            orient="records"
+        )
+    }
+
+    with open(
+        output_path,
+        "w",
+        encoding="utf-8"
+    ) as json_file:
+
+        json.dump(
+            payload,
+            json_file,
+            indent=4,
+            ensure_ascii=False
+        )
+
+
 def main() -> None:
     """
     Main execution flow.
@@ -183,6 +227,7 @@ def main() -> None:
         # 3. Lógica de Negocio (Filtrado)
         filtered_df = filter_critical_tickets(cleaned_df)
         export_to_csv(filtered_df, FILTERED_OUTPUT_FILE)
+        export_to_json(filtered_df, JSON_OUTPUT_FILE)
 
         # 4. Reporte de ejecución
         print("\nTickets loaded and cleaned successfully.")
@@ -199,6 +244,10 @@ def main() -> None:
         print(
             f"Filtered dataset exported to: "
             f"{FILTERED_OUTPUT_FILE}"
+        )
+        print(
+            f"JSON dataset exported to: "
+            f"{JSON_OUTPUT_FILE}"
         )
 
         if filtered_df.empty:
