@@ -1,0 +1,7 @@
+id;titulo;entidad;estado;ultima_actualizacion;fecha_de_apertura;prioridad;solicitante;tecnico_asignado;categoria;tiempo_de_solucion;area_solicitante;tipo_incidencia;nivel_soporte
+6565;Cambio contraseña de SIESa;Nutriavicola S.A.S.;Pendiente;25/05/2026 11:44;25/05/2026 11:44;Alta;Luis Alfredo Delgado;;;;Calidad;Hardware;Nivel 3
+6560;solicitud ayuda pantalla;Nutriavicola S.A.S.;Pendiente;25/05/2026 7:20;25/05/2026 7:20;Alta;servicioventastulua@nutriavicola.com;;;;Logística;Accesos;Nivel 2
+6552;INGRESO MICHAEL STEVEN DIAZ CASTRO;Nutriavicola S.A.S.;Pendiente;22/05/2026 11:01;21/05/2026 9:52;Alta;Andres Vivas;Carlos Lopez;CUENTAS USUARIOS;;Inteligencia de Negocios;Redes;Nivel 2
+6547;INGRESO MICHAEL STEVEN DIAZ CASTRO 2;Nutriavicola S.A.S.;Pendiente;20/05/2026 14:50;20/05/2026 14:48;Alta;Rodrigo Garzon;Carlos Lopez;CUENTAS USUARIOS;;Producción;Accesos;Nivel 2
+6538;Solicitud de reposición: Teléfono e impresora BODEGA TULUA.;Nutriavicola S.A.S.;Pendiente;19/05/2026 13:47;19/05/2026 13:14;Alta;yrivera@nutriavicola.com;Rodrigo Garzon;ACCESORIOS;;Ventas;ERP SAP;Nivel 1
+6541;Recuperar: Formato de Novedades Auxiliar Gestion de Suministros;Nutriavicola S.A.S.;Pendiente;19/05/2026 13:38;19/05/2026 13:37;Alta;Carolina Herrera;Carlos Lopez;CUENTAS USUARIOS;;Calidad;Accesos;Nivel 2

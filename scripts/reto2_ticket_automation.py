@@ -5,6 +5,7 @@ import pandas as pd
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_FILE = BASE_DIR / "data" / "tickets.csv"
 CLEAN_OUTPUT_FILE = BASE_DIR / "data" / "tickets_clean.csv"
+FILTERED_OUTPUT_FILE = BASE_DIR / "data" / "critical_tickets.csv"
 
 REQUIRED_COLUMNS = [
     "id",
@@ -103,7 +104,7 @@ def clean_ticket_data(dataframe: pd.DataFrame) -> pd.DataFrame:
             .str.strip()
         )
 
-    # Normalize critical fields (actualizado a minúsculas)
+    # Normalize critical fields
     cleaned_df["estado"] = (
         cleaned_df["estado"]
         .str.capitalize()
@@ -114,7 +115,7 @@ def clean_ticket_data(dataframe: pd.DataFrame) -> pd.DataFrame:
         .str.capitalize()
     )
 
-    # Remove duplicated tickets (actualizado a minúsculas)
+    # Remove duplicated tickets
     cleaned_df = cleaned_df.drop_duplicates(
         subset=["id"]
     )
@@ -122,15 +123,38 @@ def clean_ticket_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     return cleaned_df
 
 
-def save_clean_data(
+def filter_critical_tickets(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Filter critical pending tickets.
+
+    Conditions:
+    - estado = Pendiente
+    - prioridad = Alta
+
+    Args:
+        dataframe (pd.DataFrame): Clean dataframe.
+
+    Returns:
+        pd.DataFrame: Filtered dataframe.
+    """
+
+    filtered_df = dataframe[
+        (dataframe["estado"] == "Pendiente") &
+        (dataframe["prioridad"] == "Alta")
+    ].copy()
+
+    return filtered_df
+
+
+def export_to_csv(
     dataframe: pd.DataFrame,
     output_path: Path
 ) -> None:
     """
-    Save cleaned dataframe to CSV file.
+    Export dataframe to CSV file.
 
     Args:
-        dataframe (pd.DataFrame): Clean dataframe.
+        dataframe (pd.DataFrame): Dataframe to export.
         output_path (Path): Output file path.
     """
 
@@ -148,23 +172,39 @@ def main() -> None:
     """
 
     try:
+        # 1. Extracción
         tickets_df = load_tickets(DATA_FILE)
-
         validate_required_columns(tickets_df)
 
+        # 2. Transformación y Limpieza
         cleaned_df = clean_ticket_data(tickets_df)
+        export_to_csv(cleaned_df, CLEAN_OUTPUT_FILE)
 
-        save_clean_data(
-            cleaned_df,
-            CLEAN_OUTPUT_FILE
-        )
+        # 3. Lógica de Negocio (Filtrado)
+        filtered_df = filter_critical_tickets(cleaned_df)
+        export_to_csv(filtered_df, FILTERED_OUTPUT_FILE)
 
+        # 4. Reporte de ejecución
         print("\nTickets loaded and cleaned successfully.")
         print(f"Total records: {len(cleaned_df)}")
         print(
             f"Clean dataset exported to: "
             f"{CLEAN_OUTPUT_FILE}"
         )
+
+        print(
+            f"\nCritical pending tickets found: "
+            f"{len(filtered_df)}"
+        )
+        print(
+            f"Filtered dataset exported to: "
+            f"{FILTERED_OUTPUT_FILE}"
+        )
+
+        if filtered_df.empty:
+            print(
+                "\n[INFO] No critical pending tickets found."
+            )
 
     except FileNotFoundError as error:
         print(f"\n[FILE ERROR] {error}")
