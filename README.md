@@ -11,6 +11,8 @@ El objetivo principal es demostrar habilidades relacionadas con:
 * Integración de servicios empresariales
 * Orquestación mediante Microsoft Copilot Studio y Power Automate
 * Desarrollo de scripts en Python
+* Procesamiento y limpieza de datos
+* Manejo robusto de excepciones
 * Control de versiones y documentación técnica
 
 ---
@@ -18,9 +20,9 @@ El objetivo principal es demostrar habilidades relacionadas con:
 # Estructura del Proyecto
 
 ```bash
-├── data/                  # Archivos de entrada o datasets utilizados
-├── diagrams/              # Diagramas y arquitectura de soluciones
-├── scripts/               # Scripts desarrollados para los retos
+├── data/                  # Archivos de entrada y salida del procesamiento
+├── diagrams/              # Diagramas de arquitectura y flujos conversacionales
+├── scripts/               # Scripts Python desarrollados
 ├── README.md              # Documentación principal del proyecto
 └── requirements.txt       # Dependencias del entorno Python
 ```
@@ -33,7 +35,7 @@ El objetivo principal es demostrar habilidades relacionadas con:
 
 Diseñar la arquitectura de un agente conversacional capaz de automatizar solicitudes repetitivas relacionadas con certificados laborales.
 
-El agente fue modelado utilizando una arquitectura por capas para separar responsabilidades y facilitar la escalabilidad del flujo conversacional.
+La solución fue diseñada utilizando una arquitectura por capas para separar responsabilidades y facilitar escalabilidad, validaciones y manejo de errores.
 
 ---
 
@@ -57,37 +59,245 @@ La solución fue dividida en cinco capas principales:
 * Validación de empleado activo
 * Validación cruzada entre área ingresada y registro corporativo
 * Generación automatizada del certificado laboral
-* Envío del documento al usuario
+* Envío del documento PDF al usuario
 * Manejo de errores y fallback
 * Escalamiento a agente humano
 * Control de reintentos para evitar ciclos infinitos
 
 ---
 
-# Diagrama del Reto 1
+# Diagramas del Reto 1
 
-Ubicación:
+## Archivos incluidos
 
 ```bash
+diagrams/reto1_arquitectura_agente_certificado_laboral.drawio
 diagrams/reto1_arquitectura_agente_certificado_laboral.png
+```
+
+---
+
+# Reto 2 - Automatización y Procesamiento de Tickets
+
+## Objetivo
+
+Desarrollar un flujo automatizado en Python capaz de:
+
+1. Leer información desde un archivo CSV
+2. Limpiar y normalizar datos
+3. Validar estructura y columnas críticas
+4. Filtrar tickets críticos pendientes
+5. Exportar resultados estructurados
+6. Generar un resumen consumible por un agente conversacional
+
+---
+
+# Scripts Implementados
+
+## 1. reto2_ticket_automation.py
+
+Script principal encargado del procesamiento de tickets.
+
+### Funcionalidades
+
+* Lectura de archivos CSV
+* Validación robusta de columnas requeridas
+* Normalización de cabeceras
+* Limpieza de datos
+* Eliminación de duplicados
+* Filtrado de tickets:
+
+  * Estado = Pendiente
+  * Prioridad = Alta
+* Exportación a CSV
+* Exportación estructurada a JSON
+* Manejo avanzado de excepciones
+
+---
+
+## 2. ticket_summary.py
+
+Script encargado de consumir el JSON generado y construir un resumen dinámico para un agente conversacional.
+
+### Funcionalidades
+
+* Lectura del archivo JSON
+* Validación de estructura
+* Manejo de errores de lectura
+* Generación de resumen automático
+* Preparación de respuesta para Copilot Studio o Power Automate
+
+Ejemplo de respuesta generada:
+
+```text
+Actualmente tienes 6 tickets críticos pendientes por resolver.
+```
+
+---
+
+# Archivos de Datos
+
+## Dataset Original
+
+```bash
+data/tickets.csv
+```
+
+Archivo fuente utilizado para el procesamiento inicial.
+
+---
+
+## Dataset Limpio
+
+```bash
+data/tickets_clean.csv
+```
+
+Archivo generado tras el proceso de limpieza y normalización.
+
+---
+
+## Tickets Filtrados
+
+```bash
+data/critical_tickets.csv
+```
+
+Contiene únicamente tickets:
+
+* Pendientes
+* Prioridad Alta
+
+---
+
+## Salida JSON
+
+```bash
+data/critical_tickets.json
+```
+
+Archivo estructurado listo para ser consumido por agentes conversacionales, APIs o flujos automatizados.
+
+Incluye:
+
+* Fecha de generación
+* Total de tickets críticos
+* Lista completa de tickets filtrados
+
+---
+
+# Diagrama Conversacional - Agente de Soporte TI
+
+## Objetivo
+
+Simular un agente conversacional que:
+
+1. Recibe la solicitud del usuario
+2. Reconoce la intención
+3. Consume información desde JSON
+4. Procesa el total de tickets críticos
+5. Entrega una respuesta dinámica al usuario
+6. Maneja errores y fallbacks
+
+---
+
+# Diagramas del Reto 2
+
+## Archivos incluidos
+
+```bash
+diagrams/reto2_agente_soporte_ti.drawio
+diagrams/reto2_agente_soporte_ti.png
 ```
 
 ---
 
 # Tecnologías Utilizadas
 
+* Python 3
+* Pandas
+* JSON
 * Microsoft Copilot Studio
 * Power Automate
 * Draw.io
-* Git y GitHub
-* Python
+* Git
+* GitHub
+* Visual Studio Code
+
+---
+
+# Instalación del Proyecto
+
+## 1. Clonar repositorio
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+```
+
+---
+
+## 2. Crear entorno virtual
+
+Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Linux/Mac:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3. Instalar dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# Ejecución de Scripts
+
+## Procesamiento principal de tickets
+
+```bash
+python scripts/reto2_ticket_automation.py
+```
+
+---
+
+## Generar resumen del agente
+
+```bash
+python scripts/ticket_summary.py
+```
+
+---
+
+# Manejo de Excepciones
+
+El proyecto implementa manejo robusto de errores para escenarios como:
+
+* Archivo inexistente
+* CSV vacío
+* Estructura corrupta
+* JSON inválido
+* Columnas faltantes
+* Datos inconsistentes
+* Fallos de lectura
 
 ---
 
 # Estado del Proyecto
 
 * [x] Reto 1 - Arquitectura conversacional
-* [ ] Reto 2
+* [x] Reto 2 - Automatización y procesamiento de tickets
 * [ ] Reto 3
 
 ---
