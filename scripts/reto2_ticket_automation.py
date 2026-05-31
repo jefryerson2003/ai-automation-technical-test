@@ -4,6 +4,15 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_FILE = BASE_DIR / "data" / "tickets.csv"
+CLEAN_OUTPUT_FILE = BASE_DIR / "data" / "tickets_clean.csv"
+
+REQUIRED_COLUMNS = [
+    "id",
+    "titulo",
+    "estado",
+    "prioridad",
+    "solicitante"
+]
 
 
 def load_tickets(file_path: Path) -> pd.DataFrame:
@@ -29,6 +38,17 @@ def load_tickets(file_path: Path) -> pd.DataFrame:
             encoding="utf-8"
         )
 
+        # Normalización robusta de cabeceras
+        dataframe.columns = (
+            dataframe.columns
+            .str.strip()
+            .str.normalize('NFKD')
+            .str.encode('ascii', errors='ignore')
+            .str.decode('utf-8')
+            .str.replace(' ', '_')
+            .str.lower()
+        )
+
         return dataframe
 
     except pd.errors.EmptyDataError:
@@ -42,6 +62,86 @@ def load_tickets(file_path: Path) -> pd.DataFrame:
         )
 
 
+def validate_required_columns(dataframe: pd.DataFrame) -> None:
+    """
+    Validate required columns existence.
+
+    Args:
+        dataframe (pd.DataFrame): Input dataframe.
+    """
+
+    missing_columns = [
+        column for column in REQUIRED_COLUMNS
+        if column not in dataframe.columns
+    ]
+
+    if missing_columns:
+        raise ValueError(
+            f"Missing required columns: {missing_columns}"
+        )
+
+
+def clean_ticket_data(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Clean and normalize ticket dataset.
+
+    Args:
+        dataframe (pd.DataFrame): Raw dataframe.
+
+    Returns:
+        pd.DataFrame: Cleaned dataframe.
+    """
+
+    cleaned_df = dataframe.copy()
+
+    # Remove extra spaces from string values
+    for column in cleaned_df.select_dtypes(include="object"):
+        cleaned_df[column] = (
+            cleaned_df[column]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
+
+    # Normalize critical fields (actualizado a minúsculas)
+    cleaned_df["estado"] = (
+        cleaned_df["estado"]
+        .str.capitalize()
+    )
+
+    cleaned_df["prioridad"] = (
+        cleaned_df["prioridad"]
+        .str.capitalize()
+    )
+
+    # Remove duplicated tickets (actualizado a minúsculas)
+    cleaned_df = cleaned_df.drop_duplicates(
+        subset=["id"]
+    )
+
+    return cleaned_df
+
+
+def save_clean_data(
+    dataframe: pd.DataFrame,
+    output_path: Path
+) -> None:
+    """
+    Save cleaned dataframe to CSV file.
+
+    Args:
+        dataframe (pd.DataFrame): Clean dataframe.
+        output_path (Path): Output file path.
+    """
+
+    dataframe.to_csv(
+        output_path,
+        sep=";",
+        index=False,
+        encoding="utf-8"
+    )
+
+
 def main() -> None:
     """
     Main execution flow.
@@ -50,11 +150,30 @@ def main() -> None:
     try:
         tickets_df = load_tickets(DATA_FILE)
 
-        print("\nTickets loaded successfully.")
-        print(f"Total records: {len(tickets_df)}")
+        validate_required_columns(tickets_df)
+
+        cleaned_df = clean_ticket_data(tickets_df)
+
+        save_clean_data(
+            cleaned_df,
+            CLEAN_OUTPUT_FILE
+        )
+
+        print("\nTickets loaded and cleaned successfully.")
+        print(f"Total records: {len(cleaned_df)}")
+        print(
+            f"Clean dataset exported to: "
+            f"{CLEAN_OUTPUT_FILE}"
+        )
+
+    except FileNotFoundError as error:
+        print(f"\n[FILE ERROR] {error}")
+
+    except ValueError as error:
+        print(f"\n[VALIDATION ERROR] {error}")
 
     except Exception as error:
-        print(f"\n[ERROR] {error}")
+        print(f"\n[UNEXPECTED ERROR] {error}")
 
 
 if __name__ == "__main__":
