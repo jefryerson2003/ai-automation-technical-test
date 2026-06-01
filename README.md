@@ -201,6 +201,18 @@ Simular un agente conversacional que:
 
 ---
 
+# Arquitectura Diseñada
+
+La solución fue dividida en cinco capas principales:
+
+1. Usuario
+2. Microsoft Copilot Studio
+3. Validaciones
+4. Power Automate
+5. Sistem Data
+
+---
+
 # Diagramas del Reto 2
 
 ## Archivos incluidos
