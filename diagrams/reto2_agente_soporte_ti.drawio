@@ -1,0 +1,194 @@
+<mxfile host="65bd71144e">
+    <diagram id="zMpluaoyQO6P3AQ0TG5h" name="Página-1">
+        <mxGraphModel dx="1022" dy="468" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="Lane-Usuario" value="USUARIO" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry width="1160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="Lane-Copilot" value="MICROSOFT COPILOT STUDIO" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry y="330" width="1160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="Lane-Validaciones" value="VALIDACIONES Y CONTROL" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry y="660" width="1160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="Lane-PowerAutomate" value="POWER AUTOMATE" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry y="990" width="1160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="Lane-Data" value="SISTEMA / DATA" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry y="1320" width="1160" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nota-1" value="* Fallbacks: Si falla la lectura del JSON, el bot asume indisponibilidad y deriva a un agente humano para evitar una mala experiencia." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-Inicio" value="INICIO" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="105" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-Solicita" value="Solicita estado de&lt;br&gt;tickets críticos" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="380" y="115" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-RecibeRespuesta" value="Recibe resumen de&lt;br&gt;tickets en chat" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="970" y="135" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-Fin" value="FIN" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="970" y="20" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-SoporteHumano" value="Transferir a agente&lt;br&gt;humano" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="135" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-NLU" value="Reconocer intención&lt;br&gt;(Consultar Tickets)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="465" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-LlamarPA" value="Llamar Flujo de&lt;br&gt;Power Automate" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="465" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-EntregarRespuesta" value="Entregar respuesta&lt;br&gt;dinámica al usuario" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="970" y="465" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-NotificarError" value="Notificar problema&lt;br&gt;técnico" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="465" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-CheckIntencion" value="¿Intención&lt;br&gt;Reconocida?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="780" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-FallbackIntencion" value="Fallback: Solicitar&lt;br&gt;reformular pregunta" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="790" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-CheckJSON" value="¿JSON disponible&lt;br&gt;y válido?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="780" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-FallbackJSON" value="Error de lectura&lt;br&gt;o archivo faltante" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="790" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-CheckTickets" value="¿Tickets &gt; 0?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="990" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-LeerJSON" value="Leer archivo JSON&lt;br&gt;del sistema" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="1120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-ExtraerData" value="Procesar&lt;br&gt;total_critical_tickets" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="1120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-RespuestaPositiva" value="Generar respuesta dinámica&lt;div&gt;&#39;&quot;Actualmente tienes X tickets críticos pendientes&quot;&#39;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="990" y="1120" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-RespuestaCero" value="Construir payload:&lt;br&gt;&quot;No tienes tickets&quot;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="1125" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Nodo-BaseDatos" value="critical_tickets.json" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.document;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="1420" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-1" parent="1" source="Nodo-Inicio" target="Nodo-Solicita" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-2" parent="1" source="Nodo-Solicita" target="Nodo-NLU" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="440" y="310"/>
+                            <mxPoint x="330" y="310"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-3" parent="1" source="Nodo-NLU" target="Nodo-CheckIntencion" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-4" value="NO" parent="1" source="Nodo-CheckIntencion" target="Nodo-FallbackIntencion" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-4b" parent="1" source="Nodo-FallbackIntencion" target="Nodo-NLU" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="140" y="495"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-5" value="SI" parent="1" source="Nodo-CheckIntencion" target="Nodo-LlamarPA" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="330" y="900"/>
+                            <mxPoint x="430" y="900"/>
+                            <mxPoint x="430" y="495"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-6" parent="1" source="Nodo-LlamarPA" target="Nodo-LeerJSON" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-7" parent="1" source="Nodo-LeerJSON" target="Nodo-BaseDatos" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-8" parent="1" source="Nodo-BaseDatos" target="Nodo-CheckJSON" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="600" y="1460"/>
+                            <mxPoint x="600" y="820"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-9" value="NO" parent="1" source="Nodo-CheckJSON" target="Nodo-FallbackJSON" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-10" parent="1" source="Nodo-FallbackJSON" target="Nodo-NotificarError" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-11" parent="1" source="Nodo-NotificarError" target="Nodo-SoporteHumano" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-12" parent="1" source="Nodo-SoporteHumano" target="Nodo-Fin" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="840" y="60"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-13" value="SI" parent="1" source="Nodo-CheckJSON" target="Nodo-ExtraerData" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-14" style="exitX=0.75;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Nodo-ExtraerData" target="Nodo-CheckTickets" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="1030"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-15" value="NO" parent="1" source="Nodo-CheckTickets" target="Nodo-RespuestaCero" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-16" value="SI" parent="1" source="Nodo-CheckTickets" target="Nodo-RespuestaPositiva" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1070" y="1030"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-17" style="exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="Nodo-RespuestaCero" target="Nodo-EntregarRespuesta" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="940" y="1080"/>
+                            <mxPoint x="1000" y="1080"/>
+                            <mxPoint x="1000" y="730"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Edge-18" style="exitX=0.25;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Nodo-RespuestaPositiva" target="Nodo-EntregarRespuesta" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-19" parent="1" source="Nodo-EntregarRespuesta" target="Nodo-RecibeRespuesta" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Edge-20" parent="1" source="Nodo-RecibeRespuesta" target="Nodo-Fin" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" style="edgeStyle=none;html=1;entryX=0.081;entryY=0.46;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" parent="1" source="Nodo-Solicita" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="531.06" y="166.10000000000008" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" value="&lt;ul&gt;&lt;li&gt;¿Cómo van mis requerimientos?&lt;/li&gt;&lt;li&gt;Necesito ver el estado de mis casos asignados.&lt;/li&gt;&lt;li&gt;Quiero revisar los tickets que tengo pendientes.&lt;/li&gt;&lt;li&gt;¿Qué incidencias críticas hay abiertas hoy?&lt;/li&gt;&lt;/ul&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="90" width="180" height="180" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

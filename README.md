@@ -212,6 +212,154 @@ diagrams/reto2_agente_soporte_ti.png
 
 ---
 
+# Reto 3 - Integración y Orquestación de Agentes
+
+## Objetivo
+
+Diseñar un flujo principal de orquestación capaz de unificar los procesos desarrollados en el:
+
+* Reto 1 → Agente de Recursos Humanos
+* Reto 2 → Agente de Soporte TI
+
+La arquitectura propuesta centraliza toda la interacción en un único canal conversacional utilizando Microsoft Copilot Studio como orquestador principal.
+
+---
+
+# Arquitectura del Orquestador
+
+La solución fue diseñada siguiendo un patrón:
+
+```text
+Orquestador Central → Sub-flujos Especializados
+```
+
+El agente principal actúa como punto único de entrada y utiliza reconocimiento de intención (NLU) para enrutar automáticamente las solicitudes hacia el flujo especializado correspondiente.
+
+---
+
+# 1. Configuración del Saludo Inicial
+
+En Microsoft Copilot Studio, el saludo inicial se implementa mediante el:
+
+```text
+System Topic → Conversation Start
+```
+
+Este Topic se ejecuta automáticamente al iniciar la conversación y permite establecer el contexto general del asistente.
+
+Ejemplo implementado:
+
+```text
+"¡Hola! Soy tu Asistente Corporativo Integrado.
+Puedo ayudarte con solicitudes de Recursos Humanos
+(como certificados laborales) o incidencias de Soporte TI.
+¿En qué te puedo ayudar hoy?"
+```
+
+---
+
+# 2. Reconocimiento de Intenciones (Intent Recognition)
+
+El reconocimiento de intención se diseñó utilizando Topics personalizados dentro de Microsoft Copilot Studio.
+
+El modelo de lenguaje natural (NLU) analiza automáticamente el mensaje escrito por el usuario y determina qué flujo debe ejecutarse.
+
+---
+
+## Topic 1 - Recursos Humanos
+
+### Trigger Phrases utilizadas
+
+```text
+"Necesito certificado laboral"
+"Carta laboral"
+"Constancia de trabajo"
+"Descargar certificado"
+```
+
+### Acción ejecutada
+
+El orquestador redirige automáticamente al:
+
+```text
+Flujo del Reto 1 → Certificados Laborales
+```
+
+---
+
+## Topic 2 - Soporte TI
+
+### Trigger Phrases utilizadas
+
+```text
+"Mis tickets"
+"Tickets críticos"
+"Estado de soporte"
+"Casos pendientes"
+```
+
+### Acción ejecutada
+
+El orquestador redirige automáticamente al:
+
+```text
+Flujo del Reto 2 → Soporte Técnico
+```
+
+---
+
+# Lógica de Enrutamiento
+
+Cuando el usuario responde al saludo inicial:
+
+1. El mensaje es enviado al motor NLU de Copilot Studio
+2. El modelo analiza intención y contexto
+3. Se calcula un nivel de confianza (confidence score)
+4. El orquestador selecciona automáticamente el Topic más probable
+5. Se ejecuta el sub-flujo correspondiente
+
+Si no existe suficiente confianza en la intención detectada:
+
+* Se activa el fallback global
+* El bot solicita reformular la pregunta
+* Opcionalmente se transfiere a un agente humano
+
+---
+
+# Ventajas de la Arquitectura Unificada
+
+La arquitectura basada en:
+
+```text
+Orquestador → Sub-flujos Especializados
+```
+
+presenta múltiples ventajas frente a mantener bots separados:
+
+* Centraliza la experiencia del usuario en un único canal
+* Reduce duplicación de lógica conversacional
+* Facilita mantenimiento y escalabilidad
+* Permite reutilizar componentes y flujos
+* Mejora el control de fallback y manejo de errores
+* Simplifica futuras integraciones empresariales
+* Facilita agregar nuevos dominios o áreas sin rediseñar el sistema completo
+
+Además, cada sub-flujo puede evolucionar de forma independiente sin afectar el comportamiento general del orquestador.
+
+---
+
+# Diagramas del Reto 3
+
+## Archivos incluidos
+
+```bash
+diagrams/reto3_orquestador_copilot.drawio
+diagrams/reto3_orquestador_copilot.png
+```
+
+---
+
+
 # Tecnologías Utilizadas
 
 * Python 3
@@ -298,10 +446,10 @@ El proyecto implementa manejo robusto de errores para escenarios como:
 
 * [x] Reto 1 - Arquitectura conversacional
 * [x] Reto 2 - Automatización y procesamiento de tickets
-* [ ] Reto 3
+* [x] Reto 3 - Integración y orquestación de agentes
 
 ---
 
 # Autor
-
+Jefferson Sneyder Anaya Manrique 
 Desarrollado como parte de prueba técnica para proceso de selección de Analista de Inteligencia Artificial.
